@@ -4,6 +4,7 @@ import {Button, Text, TextInput, View} from 'react-native';
 
 function App(): JSX.Element {
   const [value, setValue] = useState('');
+  const [textArray, setTextArray] = useState<string[]>([]);
 
   const handleChangeText = (text: string) => {
     setValue(text);
@@ -11,8 +12,11 @@ function App(): JSX.Element {
 
   const handleSave = async () => {
     try {
-      await AsyncStorage.setItem('@MyApp:myKey', value);
+      const newArray = [...textArray, value];
+      await AsyncStorage.setItem('@MyApp:myKey', JSON.stringify(newArray));
       console.log(`${value} stored`);
+      setTextArray(newArray);
+      setValue('');
     } catch (error) {
       console.log('error', error);
     }
@@ -23,9 +27,15 @@ function App(): JSX.Element {
       <Text>Hello world!</Text>
       <Text>Stored value: {value}</Text>
       <TextInput
+        value={value}
         onChangeText={handleChangeText}
         style={{borderColor: 'gray', borderWidth: 1}}></TextInput>
       <Button title="Save" onPress={handleSave}></Button>
+      <View>
+        {textArray.map((text, index) => (
+          <Text key={index}>{text}</Text>
+        ))}
+      </View>
     </View>
   );
 }
