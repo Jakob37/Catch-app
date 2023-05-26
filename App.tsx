@@ -1,12 +1,41 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer, RouteProp} from '@react-navigation/native';
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {Button, Text, TextInput, View} from 'react-native';
 import {enableScreens} from 'react-native-screens';
 enableScreens();
 
-function InputScreen({navigation}) {
+type RootStackParamList = {
+  Home: undefined;
+  Details: undefined;
+};
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+
+type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
+
+type DetailsScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Details'
+>;
+
+type DetailsScreenRouteProp = RouteProp<RootStackParamList, 'Details'>;
+
+type HomeScreenProps = {
+  navigation: HomeScreenNavigationProp;
+  route: HomeScreenRouteProp;
+};
+
+type DetailsScreenProps = {
+  navigation: DetailsScreenNavigationProp;
+  route: DetailsScreenRouteProp;
+};
+
+function InputScreen({navigation}: HomeScreenProps) {
   const [value, setValue] = useState('');
   const [textArray, setTextArray] = useState<string[]>([]);
 
@@ -47,7 +76,7 @@ function InputScreen({navigation}) {
   );
 }
 
-function ContentScreen({navigation}) {
+function ContentScreen() {
   return (
     <View>
       <Text>Content screen</Text>
@@ -55,7 +84,7 @@ function ContentScreen({navigation}) {
   );
 }
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
   return (
