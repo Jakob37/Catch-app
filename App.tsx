@@ -5,7 +5,7 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack';
 import React, {useState} from 'react';
-import {Button, Text, TextInput, View} from 'react-native';
+import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {enableScreens} from 'react-native-screens';
 enableScreens();
 
@@ -47,9 +47,21 @@ function InputScreen({navigation}: HomeScreenProps) {
     try {
       const newArray = [...textArray, value];
       await AsyncStorage.setItem('@MyApp:myKey', JSON.stringify(newArray));
-      console.log(`${value} stored`);
       setTextArray(newArray);
       setValue('');
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const handleRemove = async (index: number) => {
+    try {
+      const currArray = [...textArray]
+      currArray.splice(index, 1);
+      console.log('Array:', JSON.stringify(currArray))
+      // await AsyncStorage.setItem('@MyApp:myKey', JSON.stringify(currArray));
+      setTextArray(currArray)
+      // setTextArray(textArray);
     } catch (error) {
       console.log('error', error);
     }
@@ -69,7 +81,12 @@ function InputScreen({navigation}: HomeScreenProps) {
         onPress={() => navigation.navigate('Details')}></Button>
       <View>
         {textArray.map((text, index) => (
-          <Text key={index}>{text}</Text>
+          <View>
+            <Text key={index}>{text}</Text>
+            <TouchableOpacity onPress={() => handleRemove(index)}>
+              <Text>Remove</Text>
+            </TouchableOpacity>
+          </View>
         ))}
       </View>
     </View>
