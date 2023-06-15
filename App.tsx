@@ -44,6 +44,9 @@ function InputScreen({navigation}: HomeScreenProps) {
   };
 
   const handleSave = async () => {
+    if (value === "") {
+      return
+    }
     try {
       const newArray = [...textArray, value];
       await AsyncStorage.setItem('@MyApp:myKey', JSON.stringify(newArray));
@@ -59,7 +62,7 @@ function InputScreen({navigation}: HomeScreenProps) {
       const currArray = [...textArray]
       currArray.splice(index, 1);
       console.log('Array:', JSON.stringify(currArray))
-      // await AsyncStorage.setItem('@MyApp:myKey', JSON.stringify(currArray));
+      await AsyncStorage.setItem('@MyApp:myKey', JSON.stringify(currArray));
       setTextArray(currArray)
       // setTextArray(textArray);
     } catch (error) {
