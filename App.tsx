@@ -7,6 +7,7 @@ import {
 import React, {useState} from 'react';
 import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {enableScreens} from 'react-native-screens';
+import ContentScreen from './src/screens/contentscreen';
 enableScreens();
 
 type RootStackParamList = {
@@ -92,14 +93,6 @@ function InputScreen({navigation}: HomeScreenProps) {
           </View>
         ))}
       </View>
-    </View>
-  );
-}
-
-function ContentScreen() {
-  return (
-    <View>
-      <Text>Content screen</Text>
     </View>
   );
 }
