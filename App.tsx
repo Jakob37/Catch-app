@@ -11,31 +11,31 @@ import ContentScreen from './src/screens/contentscreen';
 import InputScreen from './src/screens/inputscreen';
 enableScreens();
 
-type RootStackParamList = {
-  Home: undefined;
-  Details: undefined;
-};
+// type RootStackParamList = {
+//   Home: undefined;
+//   Details: undefined;
+// };
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+// type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
-type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
+// type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
 
-type DetailsScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Details'
->;
+// type DetailsScreenNavigationProp = StackNavigationProp<
+//   RootStackParamList,
+//   'Details'
+// >;
 
-type DetailsScreenRouteProp = RouteProp<RootStackParamList, 'Details'>;
+// type DetailsScreenRouteProp = RouteProp<RootStackParamList, 'Details'>;
 
-type HomeScreenProps = {
-  navigation: HomeScreenNavigationProp;
-  route: HomeScreenRouteProp;
-};
+// type HomeScreenProps = {
+//   navigation: HomeScreenNavigationProp;
+//   route: HomeScreenRouteProp;
+// };
 
-type DetailsScreenProps = {
-  navigation: DetailsScreenNavigationProp;
-  route: DetailsScreenRouteProp;
-};
+// type DetailsScreenProps = {
+//   navigation: DetailsScreenNavigationProp;
+//   route: DetailsScreenRouteProp;
+// };
 
 // function InputScreen({navigation}: HomeScreenProps) {
 //   const [value, setValue] = useState('');
@@ -98,6 +98,11 @@ type DetailsScreenProps = {
 //   );
 // }
 
+export type RootStackParamList = {
+  Home: undefined;
+  Details: undefined;
+};
+
 const Stack = createStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
@@ -111,4 +116,4 @@ function App(): JSX.Element {
   );
 }
 
-export default App;
+export default App

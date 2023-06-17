@@ -1,6 +1,16 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RouteProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { useState } from "react";
 import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { RootStackParamList } from "../../App";
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
+type HomeScreenProps = {
+  navigation: HomeScreenNavigationProp;
+  route: HomeScreenRouteProp;
+};
 
 function InputScreen({navigation}: HomeScreenProps) {
     const [value, setValue] = useState('');
