@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {RootStackParamList} from '../../App';
@@ -39,38 +39,52 @@ function InputScreen({navigation}: HomeScreenProps) {
     try {
       const currArray = [...textArray];
       currArray.splice(index, 1);
-      console.log('Array:', JSON.stringify(currArray));
       await AsyncStorage.setItem('@MyApp:myKey', JSON.stringify(currArray));
       setTextArray(currArray);
-      // setTextArray(textArray);
     } catch (error) {
       console.log('error', error);
     }
   };
 
+  const loadDataFromStorage = async () => {
+    try {
+      const data = await AsyncStorage.getItem('@MyApp:myKey')
+      if (data !== null) {
+        console.log("Found the data:", data)
+        const currArray = JSON.parse(data);
+        setTextArray(currArray)
+      } else {
+        console.log("No data found")
+      }
+    } catch (error) {
+      console.log("Error loading from storage", error)
+    }
+  }
+
+  useEffect(() => {
+    loadDataFromStorage();
+  }, [])
+
   return (
     <View>
-      <Text>Hello world!!</Text>
-      <Text>Stored value: {value}</Text>
       <TextInput
         value={value}
         onChangeText={handleChangeText}
         style={{borderColor: 'gray', borderWidth: 1}}></TextInput>
       <Button title="Save" onPress={handleSave}></Button>
-      <Button
+      {/* <Button
         title="Go to content view"
-        onPress={() => navigation.navigate('Details')}></Button>
+        onPress={() => navigation.navigate('Details')}></Button> */}
       <View>
         {textArray.map((text: string, index: number) => (
           <View
             key={index}
-            style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <View style={{flex: 1}}>
+            style={{flexDirection: 'row', justifyContent: 'center', height: 30}}>
+            <View style={{flex: 1, justifyContent: 'center'}}>
               <Text>{text}</Text>
             </View>
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, justifyContent: 'center'}}>
               <TouchableOpacity onPress={() => handleRemove(index)}>
-                <Text>Remove</Text>
                 <Icon name="trash-o" size={20}></Icon>
               </TouchableOpacity>
             </View>
