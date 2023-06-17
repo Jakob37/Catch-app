@@ -1,4 +1,4 @@
-import {NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {enableScreens} from 'react-native-screens';
@@ -13,11 +13,24 @@ export type RootStackParamList = {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    dark: 'gray',
+    background: 'gray',
+  },
+};
+
 function App(): JSX.Element {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={InputScreen} />
+        <Stack.Screen
+          name="Home"
+          component={InputScreen}
+          options={{headerShown: false}}
+        />
         <Stack.Screen name="Details" component={ContentScreen} />
       </Stack.Navigator>
     </NavigationContainer>

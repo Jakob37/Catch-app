@@ -3,7 +3,7 @@ import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect, useState} from 'react';
 import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackParamList} from '../../App';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -48,30 +48,42 @@ function InputScreen({navigation}: HomeScreenProps) {
 
   const loadDataFromStorage = async () => {
     try {
-      const data = await AsyncStorage.getItem('@MyApp:myKey')
+      const data = await AsyncStorage.getItem('@MyApp:myKey');
       if (data !== null) {
-        console.log("Found the data:", data)
+        console.log('Found the data:', data);
         const currArray = JSON.parse(data);
-        setTextArray(currArray)
+        setTextArray(currArray);
       } else {
-        console.log("No data found")
+        console.log('No data found');
       }
     } catch (error) {
-      console.log("Error loading from storage", error)
+      console.log('Error loading from storage', error);
     }
-  }
+  };
 
   useEffect(() => {
     loadDataFromStorage();
-  }, [])
+  }, []);
 
   return (
     <View>
-      <TextInput
-        value={value}
-        onChangeText={handleChangeText}
-        style={{borderColor: 'gray', borderWidth: 1}}></TextInput>
-      <Button title="Save" onPress={handleSave}></Button>
+      <View style={{flexDirection: 'row', alignItems: 'stretch'}}>
+        <View style={{flex: 1}}>
+          <TextInput
+            value={value}
+            onChangeText={handleChangeText}
+            style={{borderColor: 'gray', borderWidth: 1}}
+            numberOfLines={4}
+            placeholder="Enter your thoughts..."></TextInput>
+        </View>
+        <View>
+          <View style={{flex: 1, justifyContent: 'center', paddingRight: 10}}>
+            <TouchableOpacity onPress={handleSave}>
+              <Icon name="save" size={20} style={{color: 'white'}}></Icon>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
       {/* <Button
         title="Go to content view"
         onPress={() => navigation.navigate('Details')}></Button> */}
@@ -79,13 +91,18 @@ function InputScreen({navigation}: HomeScreenProps) {
         {textArray.map((text: string, index: number) => (
           <View
             key={index}
-            style={{flexDirection: 'row', justifyContent: 'center', height: 30}}>
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'stretch',
+              height: 30,
+            }}>
             <View style={{flex: 1, justifyContent: 'center'}}>
-              <Text>{text}</Text>
+              <Text style={{color: 'white'}}>{text}</Text>
             </View>
-            <View style={{flex: 1, justifyContent: 'center'}}>
+            <View style={{flex: 0, justifyContent: 'center', paddingRight: 10}}>
               <TouchableOpacity onPress={() => handleRemove(index)}>
-                <Icon name="trash-o" size={20}></Icon>
+                <Icon name="trash-o" size={20} style={{color: 'white'}}></Icon>
               </TouchableOpacity>
             </View>
           </View>
