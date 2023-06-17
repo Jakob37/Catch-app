@@ -1,9 +1,7 @@
-import { NavigationContainer } from '@react-navigation/native';
-import {
-  createStackNavigator
-} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import { enableScreens } from 'react-native-screens';
+import {enableScreens} from 'react-native-screens';
 import ContentScreen from './src/screens/contentscreen';
 import InputScreen from './src/screens/inputscreen';
 enableScreens();
@@ -26,4 +24,4 @@ function App(): JSX.Element {
   );
 }
 
-export default App
+export default App;
