@@ -3,6 +3,7 @@ import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useState} from 'react';
 import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome'
 import {RootStackParamList} from '../../App';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -70,6 +71,7 @@ function InputScreen({navigation}: HomeScreenProps) {
             <View style={{flex: 1}}>
               <TouchableOpacity onPress={() => handleRemove(index)}>
                 <Text>Remove</Text>
+                <Icon name="trash-o" size={20}></Icon>
               </TouchableOpacity>
             </View>
           </View>
