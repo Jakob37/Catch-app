@@ -8,7 +8,7 @@ export const ds = {
   },
   font: {
     sizes: {
-      major: 20,
+      major: 16,
       minor: 10,
     },
   },

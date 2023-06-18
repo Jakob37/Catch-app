@@ -1,0 +1,31 @@
+{
+    "files": [
+        {
+            "directory": "mipmap-xxxhdpi",
+            "nameSuffix": "",
+            "height": 96,
+            "width": 96
+        },{
+            "directory": "mipmap-xxhdpi",
+            "nameSuffix": "",
+            "height": 72,
+            "width": 72
+        },{
+            "directory": "mipmap-xhdpi",
+            "nameSuffix": "",
+            "height": 48,
+            "width": 48
+        },{
+            "directory": "mipmap-hdpi",
+            "nameSuffix": "",
+            "height": 36,
+            "width": 36
+        },{
+            "directory": "mipmap-mdpi",
+            "nameSuffix": "",
+            "height": 24,
+            "width": 24
+        }
+    ]
+}
+
