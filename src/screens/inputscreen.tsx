@@ -5,7 +5,8 @@ import {useEffect, useState} from 'react';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackParamList} from '../../App';
-import { formatDate } from '../util/util';
+import {formatDate} from '../util/util';
+import {ds, icons} from '../ux/design';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
@@ -112,25 +113,42 @@ function InputScreen({navigation}: HomeScreenProps) {
                 justifyContent: 'center',
                 alignItems: 'stretch',
                 // Should be controlled by content, isn't it
-                height: 40,
-                paddingLeft: 10,
-                marginVertical: 10,
+                height: ds.entries.height,
+                paddingLeft: ds.spacing.sideMargins,
+                marginVertical: ds.spacing.verticalPadding,
               }}>
               <View style={{flexDirection: 'column', flex: 1}}>
                 <View style={{flex: 1, justifyContent: 'center'}}>
-                  <Text style={{color: 'white', flexWrap: 'wrap'}}>{entry.text}</Text>
+                  <Text
+                    style={{
+                      color: ds.colors.primary,
+                      flexWrap: 'wrap',
+                      fontSize: ds.font.sizes.major,
+                    }}>
+                    {entry.text}
+                  </Text>
                 </View>
                 <View style={{flex: 1, justifyContent: 'center'}}>
-                  <Text style={{color: 'lightgray', fontSize: 10}}>{formatDate(entry.date)}</Text>
+                  <Text
+                    style={{
+                      color: ds.colors.secondary,
+                      fontSize: ds.font.sizes.minor,
+                    }}>
+                    {formatDate(entry.date)}
+                  </Text>
                 </View>
               </View>
               <View
-                style={{flex: 0, justifyContent: 'center', paddingRight: 10}}>
+                style={{
+                  flex: 0,
+                  justifyContent: 'center',
+                  paddingRight: ds.spacing.sideMargins,
+                }}>
                 <TouchableOpacity onPress={() => handleRemove(index)}>
                   <Icon
-                    name="trash-o"
-                    size={20}
-                    style={{color: 'white'}}></Icon>
+                    name={icons.trash}
+                    size={ds.icons.size}
+                    style={{color: ds.colors.primary}}></Icon>
                 </TouchableOpacity>
               </View>
             </View>
@@ -139,7 +157,5 @@ function InputScreen({navigation}: HomeScreenProps) {
     </View>
   );
 }
-
-
 
 export default InputScreen;
