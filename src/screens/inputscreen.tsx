@@ -86,14 +86,16 @@ function InputScreen({navigation}: HomeScreenProps) {
           <TextInput
             value={currentInput}
             onChangeText={handleChangeText}
-            style={{borderColor: 'gray', borderWidth: 1}}
-            numberOfLines={4}
+            numberOfLines={ds.textInput.numberOfLines}
             placeholder="Enter your thoughts..."></TextInput>
         </View>
         <View>
-          <View style={{flex: 1, justifyContent: 'center', paddingRight: 10}}>
+          <View style={{flex: 1, justifyContent: 'center', paddingRight: ds.spacing.sideMargins}}>
             <TouchableOpacity onPress={handleSave}>
-              <Icon name="save" size={20} style={{color: 'white'}}></Icon>
+              <Icon
+                name={icons.save}
+                size={ds.icons.size}
+                style={{color: ds.colors.primary}}></Icon>
             </TouchableOpacity>
           </View>
         </View>

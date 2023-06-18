@@ -19,8 +19,12 @@ export const ds = {
   icons: {
     size: 20,
   },
+  textInput: {
+    numberOfLines: 4,
+  },
 };
 
 export const icons = {
   trash: 'trash-o',
+  save: 'save',
 };
