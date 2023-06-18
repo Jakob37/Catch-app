@@ -13,23 +13,25 @@ type HomeScreenProps = {
   route: HomeScreenRouteProp;
 };
 
+const STORAGE_KEY = '@catch:entries';
+
 function InputScreen({navigation}: HomeScreenProps) {
-  const [value, setValue] = useState('');
-  const [textArray, setTextArray] = useState<string[]>([]);
+  const [currentInput, setCurrentInput] = useState('');
+  const [storedEntries, setStoredEntries] = useState<string[]>([]);
 
   const handleChangeText = (text: string) => {
-    setValue(text);
+    setCurrentInput(text);
   };
 
   const handleSave = async () => {
-    if (value === '') {
+    if (currentInput === '') {
       return;
     }
     try {
-      const newArray = [...textArray, value];
-      await AsyncStorage.setItem('@MyApp:myKey', JSON.stringify(newArray));
-      setTextArray(newArray);
-      setValue('');
+      const updatedEntries = [...storedEntries, currentInput];
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedEntries));
+      setStoredEntries(updatedEntries);
+      setCurrentInput('');
     } catch (error) {
       console.log('error', error);
     }
@@ -37,10 +39,10 @@ function InputScreen({navigation}: HomeScreenProps) {
 
   const handleRemove = async (index: number) => {
     try {
-      const currArray = [...textArray];
+      const currArray = [...storedEntries];
       currArray.splice(index, 1);
-      await AsyncStorage.setItem('@MyApp:myKey', JSON.stringify(currArray));
-      setTextArray(currArray);
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(currArray));
+      setStoredEntries(currArray);
     } catch (error) {
       console.log('error', error);
     }
@@ -48,11 +50,11 @@ function InputScreen({navigation}: HomeScreenProps) {
 
   const loadDataFromStorage = async () => {
     try {
-      const data = await AsyncStorage.getItem('@MyApp:myKey');
-      if (data !== null) {
-        console.log('Found the data:', data);
-        const currArray = JSON.parse(data);
-        setTextArray(currArray);
+      const storedEntries = await AsyncStorage.getItem(STORAGE_KEY);
+      if (storedEntries !== null) {
+        console.log('Found the data:', storedEntries);
+        const currArray = JSON.parse(storedEntries);
+        setStoredEntries(currArray);
       } else {
         console.log('No data found');
       }
@@ -70,7 +72,7 @@ function InputScreen({navigation}: HomeScreenProps) {
       <View style={{flexDirection: 'row', alignItems: 'stretch'}}>
         <View style={{flex: 1}}>
           <TextInput
-            value={value}
+            value={currentInput}
             onChangeText={handleChangeText}
             style={{borderColor: 'gray', borderWidth: 1}}
             numberOfLines={4}
@@ -88,7 +90,7 @@ function InputScreen({navigation}: HomeScreenProps) {
         title="Go to content view"
         onPress={() => navigation.navigate('Details')}></Button> */}
       <View>
-        {textArray.map((text: string, index: number) => (
+        {storedEntries.map((text: string, index: number) => (
           <View
             key={index}
             style={{
@@ -96,9 +98,16 @@ function InputScreen({navigation}: HomeScreenProps) {
               justifyContent: 'center',
               alignItems: 'stretch',
               height: 30,
+              paddingLeft: 10,
+              marginVertical: 10
             }}>
-            <View style={{flex: 1, justifyContent: 'center'}}>
-              <Text style={{color: 'white'}}>{text}</Text>
+            <View style={{flexDirection: 'column', flex: 1}}>
+              <View style={{flex: 1, justifyContent: 'center'}}>
+                <Text style={{color: 'white'}}>{text}</Text>
+              </View>
+              <View style={{flex: 1, justifyContent: 'center'}}>
+                <Text style={{color: 'lightgray'}}>test</Text>
+              </View>
             </View>
             <View style={{flex: 0, justifyContent: 'center', paddingRight: 10}}>
               <TouchableOpacity onPress={() => handleRemove(index)}>
