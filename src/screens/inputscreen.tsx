@@ -2,9 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect, useState} from 'react';
-import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackParamList} from '../../App';
+import { formatDate } from '../util/util';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
@@ -15,9 +16,14 @@ type HomeScreenProps = {
 
 const STORAGE_KEY = '@catch:entries';
 
+type Entry = {
+  text: string;
+  date: string;
+};
+
 function InputScreen({navigation}: HomeScreenProps) {
   const [currentInput, setCurrentInput] = useState('');
-  const [storedEntries, setStoredEntries] = useState<string[]>([]);
+  const [storedEntries, setStoredEntries] = useState<Entry[]>([]);
 
   const handleChangeText = (text: string) => {
     setCurrentInput(text);
@@ -28,7 +34,12 @@ function InputScreen({navigation}: HomeScreenProps) {
       return;
     }
     try {
-      const updatedEntries = [...storedEntries, currentInput];
+      const parsedInput = {
+        text: currentInput,
+        date: String(new Date()),
+      };
+
+      const updatedEntries = [...storedEntries, parsedInput];
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedEntries));
       setStoredEntries(updatedEntries);
       setCurrentInput('');
@@ -90,35 +101,45 @@ function InputScreen({navigation}: HomeScreenProps) {
         title="Go to content view"
         onPress={() => navigation.navigate('Details')}></Button> */}
       <View>
-        {storedEntries.map((text: string, index: number) => (
-          <View
-            key={index}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'stretch',
-              height: 30,
-              paddingLeft: 10,
-              marginVertical: 10
-            }}>
-            <View style={{flexDirection: 'column', flex: 1}}>
-              <View style={{flex: 1, justifyContent: 'center'}}>
-                <Text style={{color: 'white'}}>{text}</Text>
+        {storedEntries
+          .slice(0)
+          .reverse()
+          .map((entry: Entry, index: number) => (
+            <View
+              key={index}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'stretch',
+                // Should be controlled by content, isn't it
+                height: 40,
+                paddingLeft: 10,
+                marginVertical: 10,
+              }}>
+              <View style={{flexDirection: 'column', flex: 1}}>
+                <View style={{flex: 1, justifyContent: 'center'}}>
+                  <Text style={{color: 'white', flexWrap: 'wrap'}}>{entry.text}</Text>
+                </View>
+                <View style={{flex: 1, justifyContent: 'center'}}>
+                  <Text style={{color: 'lightgray', fontSize: 10}}>{formatDate(entry.date)}</Text>
+                </View>
               </View>
-              <View style={{flex: 1, justifyContent: 'center'}}>
-                <Text style={{color: 'lightgray'}}>test</Text>
+              <View
+                style={{flex: 0, justifyContent: 'center', paddingRight: 10}}>
+                <TouchableOpacity onPress={() => handleRemove(index)}>
+                  <Icon
+                    name="trash-o"
+                    size={20}
+                    style={{color: 'white'}}></Icon>
+                </TouchableOpacity>
               </View>
             </View>
-            <View style={{flex: 0, justifyContent: 'center', paddingRight: 10}}>
-              <TouchableOpacity onPress={() => handleRemove(index)}>
-                <Icon name="trash-o" size={20} style={{color: 'white'}}></Icon>
-              </TouchableOpacity>
-            </View>
-          </View>
-        ))}
+          ))}
       </View>
     </View>
   );
 }
+
+
 
 export default InputScreen;
