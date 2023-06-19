@@ -86,8 +86,12 @@ function InputScreen({navigation}: HomeScreenProps) {
           <TextInput
             value={currentInput}
             onChangeText={handleChangeText}
-            numberOfLines={ds.textInput.numberOfLines}
-            placeholder="Enter your thoughts..."></TextInput>
+            // numberOfLines={ds.textInput.numberOfLines}
+            multiline={false}
+            placeholder="Enter your thoughts..."
+            onSubmitEditing={_event => {
+              handleSave();
+            }}></TextInput>
         </View>
         <View>
           <View

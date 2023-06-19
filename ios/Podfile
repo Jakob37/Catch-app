@@ -21,7 +21,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'catch_app' do
+target 'Catch' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -43,7 +43,7 @@ target 'catch_app' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'catch_appTests' do
+  target 'CatchTests' do
     inherit! :complete
     # Pods for testing
   end
