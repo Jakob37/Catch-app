@@ -90,7 +90,12 @@ function InputScreen({navigation}: HomeScreenProps) {
             placeholder="Enter your thoughts..."></TextInput>
         </View>
         <View>
-          <View style={{flex: 1, justifyContent: 'center', paddingRight: ds.spacing.sideMargins}}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              paddingRight: ds.spacing.sideMargins,
+            }}>
             <TouchableOpacity onPress={handleSave}>
               <Icon
                 name={icons.save}
@@ -146,7 +151,12 @@ function InputScreen({navigation}: HomeScreenProps) {
                   justifyContent: 'center',
                   paddingRight: ds.spacing.sideMargins,
                 }}>
-                <TouchableOpacity onPress={() => handleRemove(index)}>
+                <TouchableOpacity
+                  onPress={() =>
+                    // Temporary fix to get the right entry
+                    // Should be using index-based system
+                    handleRemove(storedEntries.length - index - 1)
+                  }>
                   <Icon
                     name={icons.trash}
                     size={ds.icons.size}
