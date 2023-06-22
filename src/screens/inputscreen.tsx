@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect, useState} from 'react';
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackParamList} from '../../App';
 import {formatDate} from '../util/util';
@@ -80,7 +80,7 @@ function InputScreen({navigation}: HomeScreenProps) {
   }, []);
 
   return (
-    <View>
+    <View style={{height: '100%'}}>
       <View style={{flexDirection: 'row', alignItems: 'stretch'}}>
         <View style={{flex: 1}}>
           <TextInput
@@ -112,7 +112,7 @@ function InputScreen({navigation}: HomeScreenProps) {
       {/* <Button
         title="Go to content view"
         onPress={() => navigation.navigate('Details')}></Button> */}
-      <View>
+      <ScrollView>
         {storedEntries
           .slice(0)
           .reverse()
@@ -167,7 +167,7 @@ function InputScreen({navigation}: HomeScreenProps) {
               </View>
             </View>
           ))}
-      </View>
+      </ScrollView>
     </View>
   );
 }
