@@ -64,7 +64,6 @@ function InputScreen({navigation}: HomeScreenProps) {
     try {
       const storedEntries = await AsyncStorage.getItem(STORAGE_KEY);
       if (storedEntries !== null) {
-        console.log('Found the data:', storedEntries);
         const currArray = JSON.parse(storedEntries);
         setStoredEntries(currArray);
       } else {
@@ -89,6 +88,7 @@ function InputScreen({navigation}: HomeScreenProps) {
             // numberOfLines={ds.textInput.numberOfLines}
             multiline={false}
             placeholder="Enter your thoughts..."
+            blurOnSubmit={false}
             onSubmitEditing={_event => {
               handleSave();
             }}></TextInput>
