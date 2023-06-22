@@ -123,13 +123,11 @@ function InputScreen({navigation}: HomeScreenProps) {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'stretch',
-                // Should be controlled by content, isn't it
-                height: ds.entries.height,
                 paddingLeft: ds.spacing.sideMargins,
                 marginVertical: ds.spacing.verticalPadding,
               }}>
               <View style={{flexDirection: 'column', flex: 1}}>
-                <View style={{flex: 1, justifyContent: 'center', width: '100%'}}>
+                <View style={{justifyContent: 'center'}}>
                   <Text
                     style={{
                       color: ds.colors.primary,
@@ -139,7 +137,7 @@ function InputScreen({navigation}: HomeScreenProps) {
                     {entry.text}
                   </Text>
                 </View>
-                <View style={{flex: 1, justifyContent: 'center'}}>
+                <View style={{justifyContent: 'center'}}>
                   <Text
                     style={{
                       color: ds.colors.secondary,
