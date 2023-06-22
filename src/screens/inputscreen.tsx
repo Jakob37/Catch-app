@@ -129,7 +129,7 @@ function InputScreen({navigation}: HomeScreenProps) {
                 marginVertical: ds.spacing.verticalPadding,
               }}>
               <View style={{flexDirection: 'column', flex: 1}}>
-                <View style={{flex: 1, justifyContent: 'center'}}>
+                <View style={{flex: 1, justifyContent: 'center', width: '100%'}}>
                   <Text
                     style={{
                       color: ds.colors.primary,
