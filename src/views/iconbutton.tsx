@@ -6,13 +6,14 @@ function IconButton(props: {
   icon: string
   size: number
   color: string
+  style: {}
 }) {
   return (
     <TouchableOpacity onPress={props.onPress}>
       <Icon
         name={props.icon}
         size={props.size}
-        style={{color: props.color}}></Icon>
+        style={{color: props.color, ...props.style}}></Icon>
     </TouchableOpacity>
   )
 }

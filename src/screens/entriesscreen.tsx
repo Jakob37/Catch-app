@@ -7,17 +7,17 @@ import {StorageContext} from '../context/storage'
 import {Entry} from '../data/entry'
 import {EntryRow} from '../views/views'
 
-type DetailsScreenNavigationProp = StackNavigationProp<
+type EntriesScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  'Details'
+  'Entries'
 >
-type DetailsScreenRouteProp = RouteProp<RootStackParamList, 'Details'>
-type DetailsScreenProps = {
-  navigation: DetailsScreenNavigationProp
-  route: DetailsScreenRouteProp
+type EntriesScreenRouteProp = RouteProp<RootStackParamList, 'Entries'>
+type EntriesScreenProps = {
+  navigation: EntriesScreenNavigationProp
+  route: EntriesScreenRouteProp
 }
 
-function ContentScreen({route}: DetailsScreenProps) {
+function EntriesScreen({route}: EntriesScreenProps) {
   const {entries, saveEntries} = useContext(StorageContext)
 
   const handleRemove = async (index: number) => {
@@ -53,4 +53,4 @@ function ContentScreen({route}: DetailsScreenProps) {
   )
 }
 
-export default ContentScreen
+export default EntriesScreen

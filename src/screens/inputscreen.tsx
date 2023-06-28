@@ -82,10 +82,6 @@ function InputScreen({navigation}: HomeScreenProps) {
         handleChangeText={(text: string) =>
           setCurrentTagInput(text)
         }></InputRow>
-
-      <Button
-        title="View entries"
-        onPress={() => navigation.navigate('Details')}></Button>
     </View>
   )
 }

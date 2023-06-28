@@ -1,24 +1,18 @@
-import {
-  DefaultTheme,
-  NavigationContainer,
-  useNavigation,
-} from '@react-navigation/native'
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
-import React, {useEffect, useState} from 'react'
-import {enableScreens} from 'react-native-screens'
-import ContentScreen from './src/screens/contentscreen'
-import InputScreen from './src/screens/inputscreen'
-import {STORAGE_KEY} from './src/data/storage'
-import {Entry} from './src/data/entry'
-import {StorageProvider} from './src/context/storage'
+import React from 'react'
 import {Text} from 'react-native'
-import {IconButton} from './src/views/iconbutton'
+import {enableScreens} from 'react-native-screens'
+import {StorageProvider} from './src/context/storage'
+import EntriesScreen from './src/screens/entriesscreen'
+import InputScreen from './src/screens/inputscreen'
 import {ds, icons} from './src/ux/design'
+import {IconButton} from './src/views/iconbutton'
 enableScreens()
 
 export type RootStackParamList = {
   Home: undefined
-  Details: undefined
+  Entries: undefined
 }
 
 const Stack = createStackNavigator<RootStackParamList>()
@@ -41,23 +35,23 @@ function App(): JSX.Element {
             name="Home"
             component={InputScreen}
             options={({navigation}) => ({
-              headerTitle: () => <Text style={{color: 'black'}}>test</Text>,
               headerRight: () => (
                 <IconButton
-                  icon={icons.trash}
+                  icon={icons.bars}
                   color={ds.colors.secondary}
                   size={ds.font.sizes.topBar}
                   onPress={() => {
-                    navigation.navigate('Details')
-                  }}></IconButton>
+                    navigation.navigate('Entries')
+                  }}
+                  style={{padding: ds.spacing.sideMargins}}></IconButton>
               ),
             })}
           />
           <Stack.Screen
-            name="Details"
-            component={ContentScreen}
+            name="Entries"
+            component={EntriesScreen}
             options={{
-              title: 'Testing',
+              title: 'Entries',
             }}
           />
         </Stack.Navigator>
