@@ -30,10 +30,6 @@ function InputScreen({navigation}: HomeScreenProps) {
 
   const [tags, setTags] = useState<string[]>([])
 
-  const handleChangeText = (text: string) => {
-    setCurrentInput(text)
-  }
-
   const handleSave = async () => {
     if (currentInput === '') {
       return
@@ -98,13 +94,17 @@ function InputScreen({navigation}: HomeScreenProps) {
         icon={icons.save}
         textInputValue={currentInput}
         handleSave={handleSave}
-        handleChangeText={handleChangeText}></InputRow>
+        handleChangeText={(text: string) => setCurrentInput(text)}></InputRow>
+      <Text>{tags.map((tag: string) => `#${tag}`).join(' ')}</Text>
+
       <InputRow
         placeholder="Enter your tags..."
         icon={icons.tag}
-        textInputValue={currentInput}
-        handleSave={handleSave}
-        handleChangeText={handleChangeText}></InputRow>
+        textInputValue={currentTagInput}
+        handleSave={handleSaveTag}
+        handleChangeText={(text: string) =>
+          setCurrentTagInput(text)
+        }></InputRow>
 
       {/* <Button
         title="Go to content view"
