@@ -45,14 +45,9 @@ function InputRow(props: {
   )
 }
 
-function EntryRow(props: {
-  index: number
-  entry: Entry
-  handleRemove: () => void
-}) {
+function EntryRow(props: {entry: Entry; handleRemove: () => void}) {
   return (
     <View
-      key={props.index}
       style={{
         flexDirection: 'row',
         justifyContent: 'center',

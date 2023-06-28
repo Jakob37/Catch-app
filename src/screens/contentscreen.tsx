@@ -45,7 +45,7 @@ function ContentScreen({route}: DetailsScreenProps) {
           .reverse()
           .map((entry: Entry, index: number) => (
             <EntryRow
-              index={index}
+              key={index}
               entry={entry}
               handleRemove={() =>
                 handleRemove(storedEntries.length - index - 1)
