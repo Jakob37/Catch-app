@@ -106,19 +106,6 @@ function InputScreen({navigation}: HomeScreenProps) {
       <Button
         title="Go to content view"
         onPress={() => navigation.navigate('Details')}></Button>
-      {/* <ScrollView>
-        {storedEntries
-          .slice(0)
-          .reverse()
-          .map((entry: Entry, index: number) => (
-            <EntryRow
-              index={index}
-              entry={entry}
-              handleRemove={() =>
-                handleRemove(storedEntries.length - index - 1)
-              }></EntryRow>
-          ))}
-      </ScrollView> */}
     </View>
   )
 }
