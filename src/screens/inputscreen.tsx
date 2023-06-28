@@ -16,7 +16,7 @@ import {formatDate} from '../util/util'
 import {ds, icons} from '../ux/design'
 import {EntryRow, InputRow} from '../views/views'
 import {Entry} from '../data/entry'
-import {STORAGE_KEY} from '../data/storage'
+import {STORAGE_KEY, loadDataFromStorage} from '../data/storage'
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>
 type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>
@@ -73,22 +73,12 @@ function InputScreen({navigation}: HomeScreenProps) {
     }
   }
 
-  const loadDataFromStorage = async () => {
-    try {
-      const storedEntries = await AsyncStorage.getItem(STORAGE_KEY)
-      if (storedEntries !== null) {
-        const currArray = JSON.parse(storedEntries)
-        setStoredEntries(currArray)
-      } else {
-        console.log('No data found')
-      }
-    } catch (error) {
-      console.log('Error loading from storage', error)
-    }
+  const onLoad = async () => {
+    loadDataFromStorage(entries => setStoredEntries(entries))
   }
 
   useEffect(() => {
-    loadDataFromStorage()
+    onLoad()
   }, [])
 
   return (

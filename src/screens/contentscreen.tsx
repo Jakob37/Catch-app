@@ -4,7 +4,7 @@ import {ScrollView, Text, View} from 'react-native'
 import {RootStackParamList} from '../../App'
 import {EntryRow} from '../views/views'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {STORAGE_KEY} from '../data/storage'
+import {STORAGE_KEY, loadDataFromStorage} from '../data/storage'
 import {Entry} from '../data/entry'
 import {useEffect, useState} from 'react'
 
@@ -22,24 +22,7 @@ function ContentScreen({route}: DetailsScreenProps) {
   const [storedEntries, setStoredEntries] = useState<Entry[]>([])
 
   useEffect(() => {
-    console.log('Triggering useEffect')
-    setStoredEntries([
-      {
-        text: 'Entry 1',
-        date: String(new Date()),
-        tags: [],
-      },
-      {
-        text: 'Entry 2',
-        date: String(new Date()),
-        tags: [],
-      },
-      {
-        text: 'Entry 3',
-        date: String(new Date()),
-        tags: [],
-      },
-    ])
+    loadDataFromStorage(entries => setStoredEntries(entries))
   }, [])
 
   const handleRemove = async (index: number) => {
