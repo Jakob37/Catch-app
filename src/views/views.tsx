@@ -33,15 +33,36 @@ function InputRow(props: {
             justifyContent: 'center',
             paddingRight: ds.spacing.sideMargins,
           }}>
-          <TouchableOpacity onPress={props.handleSave}>
+          <IconButton
+            onPress={props.handleSave}
+            icon={props.icon}
+            size={ds.icons.size}
+            color={ds.colors.primary}></IconButton>
+          {/* <TouchableOpacity onPress={props.handleSave}>
             <Icon
               name={props.icon}
               size={ds.icons.size}
               style={{color: ds.colors.primary}}></Icon>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     </View>
+  )
+}
+
+function IconButton(props: {
+  onPress: () => void
+  icon: string
+  size: number
+  color: string
+}) {
+  return (
+    <TouchableOpacity onPress={props.onPress}>
+      <Icon
+        name={props.icon}
+        size={props.size}
+        style={{color: props.color}}></Icon>
+    </TouchableOpacity>
   )
 }
 
@@ -109,4 +130,4 @@ function EntryRow(props: {entry: Entry; handleRemove: () => void}) {
   )
 }
 
-export {InputRow, EntryRow}
+export {InputRow, EntryRow, IconButton}

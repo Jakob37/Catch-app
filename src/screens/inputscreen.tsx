@@ -104,7 +104,7 @@ function InputScreen({navigation}: HomeScreenProps) {
         }></InputRow>
 
       <Button
-        title="Go to content view"
+        title="View entries"
         onPress={() => navigation.navigate('Details')}></Button>
     </View>
   )
