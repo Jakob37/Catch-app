@@ -29,6 +29,7 @@ function ContentScreen({route}: DetailsScreenProps) {
     try {
       const currArray = [...storedEntries]
       currArray.splice(index, 1)
+      console.log('content screen remaining', currArray)
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(currArray))
       setStoredEntries(currArray)
     } catch (error) {

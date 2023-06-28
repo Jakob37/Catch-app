@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {RouteProp} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
-import {useEffect, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import {
   Button,
   ScrollView,
@@ -17,6 +17,7 @@ import {ds, icons} from '../ux/design'
 import {EntryRow, InputRow} from '../views/views'
 import {Entry} from '../data/entry'
 import {STORAGE_KEY, loadDataFromStorage} from '../data/storage'
+import {StorageContext} from '../context/storage'
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>
 type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>
@@ -28,7 +29,8 @@ type HomeScreenProps = {
 function InputScreen({navigation}: HomeScreenProps) {
   const [currentInput, setCurrentInput] = useState('')
   const [currentTagInput, setCurrentTagInput] = useState('')
-  const [storedEntries, setStoredEntries] = useState<Entry[]>([])
+  // const [storedEntries, setStoredEntries] = useState<Entry[]>([])
+  const storedEntries = useContext(StorageContext)
 
   const [tags, setTags] = useState<string[]>([])
 
@@ -63,18 +65,19 @@ function InputScreen({navigation}: HomeScreenProps) {
     setCurrentTagInput('')
   }
 
-  const handleRemove = async (index: number) => {
-    try {
-      const currArray = [...storedEntries]
-      currArray.splice(index, 1)
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(currArray))
-      setStoredEntries(currArray)
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
+  // const handleRemove = async (index: number) => {
+  //   try {
+  //     const currArray = [...storedEntries]
+  //     currArray.splice(index, 1)
+  //     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(currArray))
+  //     setStoredEntries(currArray)
+  //   } catch (error) {
+  //     console.log('error', error)
+  //   }
+  // }
 
   const onLoad = async () => {
+    console.log('loading in input screen')
     loadDataFromStorage(entries => setStoredEntries(entries))
   }
 
