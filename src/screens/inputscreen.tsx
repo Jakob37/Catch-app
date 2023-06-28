@@ -32,6 +32,7 @@ function InputScreen({navigation}: HomeScreenProps) {
 
   const [tags, setTags] = useState<string[]>([])
 
+  // FIXME: More robust handling of multiple entries
   const handleSave = async () => {
     if (currentInput === '') {
       return
