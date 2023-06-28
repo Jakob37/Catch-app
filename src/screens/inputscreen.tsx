@@ -38,7 +38,7 @@ function InputScreen({navigation}: HomeScreenProps) {
         </View>
       ),
     })
-  }, [])
+  }, [currentInput, currentTagInput])
 
   const handleSave = async () => {
     console.log('handling save')
