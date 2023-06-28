@@ -1,6 +1,8 @@
-import {TextInput, TouchableOpacity, View} from 'react-native'
+import {Text, TextInput, TouchableOpacity, View} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import {ds} from '../ux/design'
+import {ds, icons} from '../ux/design'
+import {Entry} from '../data/entry'
+import {formatDate} from '../util/util'
 
 function InputRow(props: {
   placeholder: string
@@ -43,4 +45,73 @@ function InputRow(props: {
   )
 }
 
-export {InputRow}
+function EntryRow(props: {
+  key: string
+  entry: Entry
+  handleRemove: () => void
+}) {
+  return (
+    <View
+      key={props.key}
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        paddingLeft: ds.spacing.sideMargins,
+        marginVertical: ds.spacing.verticalPadding,
+      }}>
+      <View style={{flexDirection: 'column', flex: 1}}>
+        <View style={{justifyContent: 'center'}}>
+          <Text
+            style={{
+              color: ds.colors.primary,
+              flexWrap: 'wrap',
+              fontSize: ds.font.sizes.major,
+            }}>
+            {props.entry.text}
+          </Text>
+        </View>
+        <View style={{justifyContent: 'center'}}>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                color: ds.colors.secondary,
+                fontSize: ds.font.sizes.minor,
+              }}>
+              {formatDate(props.entry.date, true)}
+            </Text>
+            <Text
+              style={{
+                color: ds.colors.primary,
+                fontSize: ds.font.sizes.minor,
+              }}>
+              {props.entry.tags != null
+                ? props.entry.tags.map(tag => `#${tag}`).join(' ')
+                : '<No tags>'}
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={{
+          flex: 0,
+          justifyContent: 'center',
+          paddingRight: ds.spacing.sideMargins,
+        }}>
+        <TouchableOpacity
+          onPress={() =>
+            // Temporary fix to get the right entry
+            // Should be using index-based system
+            props.handleRemove()
+          }>
+          <Icon
+            name={icons.trash}
+            size={ds.icons.size}
+            style={{color: ds.colors.primary}}></Icon>
+        </TouchableOpacity>
+      </View>
+    </View>
+  )
+}
+
+export {InputRow, EntryRow}

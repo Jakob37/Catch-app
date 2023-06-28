@@ -7,7 +7,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import {RootStackParamList} from '../../App'
 import {formatDate} from '../util/util'
 import {ds, icons} from '../ux/design'
-import {InputRow} from '../views/views'
+import {EntryRow, InputRow} from '../views/views'
+import {Entry} from '../data/entry'
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>
 type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>
@@ -17,12 +18,6 @@ type HomeScreenProps = {
 }
 
 const STORAGE_KEY = '@catch:entries'
-
-type Entry = {
-  text: string
-  date: string
-  tags: string[]
-}
 
 function InputScreen({navigation}: HomeScreenProps) {
   const [currentInput, setCurrentInput] = useState('')
@@ -117,66 +112,12 @@ function InputScreen({navigation}: HomeScreenProps) {
           .slice(0)
           .reverse()
           .map((entry: Entry, index: number) => (
-            <View
-              key={index}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'stretch',
-                paddingLeft: ds.spacing.sideMargins,
-                marginVertical: ds.spacing.verticalPadding,
-              }}>
-              <View style={{flexDirection: 'column', flex: 1}}>
-                <View style={{justifyContent: 'center'}}>
-                  <Text
-                    style={{
-                      color: ds.colors.primary,
-                      flexWrap: 'wrap',
-                      fontSize: ds.font.sizes.major,
-                    }}>
-                    {entry.text}
-                  </Text>
-                </View>
-                <View style={{justifyContent: 'center'}}>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text
-                      style={{
-                        color: ds.colors.secondary,
-                        fontSize: ds.font.sizes.minor,
-                      }}>
-                      {formatDate(entry.date, true)}
-                    </Text>
-                    <Text
-                      style={{
-                        color: ds.colors.primary,
-                        fontSize: ds.font.sizes.minor,
-                      }}>
-                      {entry.tags != null
-                        ? entry.tags.map(tag => `#${tag}`).join(' ')
-                        : '<No tags>'}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View
-                style={{
-                  flex: 0,
-                  justifyContent: 'center',
-                  paddingRight: ds.spacing.sideMargins,
-                }}>
-                <TouchableOpacity
-                  onPress={() =>
-                    // Temporary fix to get the right entry
-                    // Should be using index-based system
-                    handleRemove(storedEntries.length - index - 1)
-                  }>
-                  <Icon
-                    name={icons.trash}
-                    size={ds.icons.size}
-                    style={{color: ds.colors.primary}}></Icon>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <EntryRow
+              key={String(index)}
+              entry={entry}
+              handleRemove={() =>
+                handleRemove(storedEntries.length - index - 1)
+              }></EntryRow>
           ))}
       </ScrollView>
     </View>
