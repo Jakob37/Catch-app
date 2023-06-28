@@ -21,6 +21,7 @@ const STORAGE_KEY = '@catch:entries'
 type Entry = {
   text: string
   date: string
+  tags: string[]
 }
 
 function InputScreen({navigation}: HomeScreenProps) {
@@ -38,12 +39,14 @@ function InputScreen({navigation}: HomeScreenProps) {
       const parsedInput = {
         text: currentInput,
         date: String(new Date()),
+        tags: tags,
       }
 
       const updatedEntries = [...storedEntries, parsedInput]
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedEntries))
       setStoredEntries(updatedEntries)
       setCurrentInput('')
+      setTags([])
     } catch (error) {
       console.log('error', error)
     }
@@ -135,13 +138,24 @@ function InputScreen({navigation}: HomeScreenProps) {
                   </Text>
                 </View>
                 <View style={{justifyContent: 'center'}}>
-                  <Text
-                    style={{
-                      color: ds.colors.secondary,
-                      fontSize: ds.font.sizes.minor,
-                    }}>
-                    {formatDate(entry.date)}
-                  </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text
+                      style={{
+                        color: ds.colors.secondary,
+                        fontSize: ds.font.sizes.minor,
+                      }}>
+                      {formatDate(entry.date, true)}
+                    </Text>
+                    <Text
+                      style={{
+                        color: ds.colors.primary,
+                        fontSize: ds.font.sizes.minor,
+                      }}>
+                      {entry.tags != null
+                        ? entry.tags.map(tag => `#${tag}`).join(' ')
+                        : '<No tags>'}
+                    </Text>
+                  </View>
                 </View>
               </View>
               <View
