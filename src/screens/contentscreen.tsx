@@ -6,7 +6,8 @@ import {EntryRow} from '../views/views'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {STORAGE_KEY, loadDataFromStorage} from '../data/storage'
 import {Entry} from '../data/entry'
-import {useEffect, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
+import {StorageContext} from '../context/storage'
 
 type DetailsScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -19,19 +20,13 @@ type DetailsScreenProps = {
 }
 
 function ContentScreen({route}: DetailsScreenProps) {
-  const [storedEntries, setStoredEntries] = useState<Entry[]>([])
-
-  useEffect(() => {
-    loadDataFromStorage(entries => setStoredEntries(entries))
-  }, [])
+  const {entries, saveEntries} = useContext(StorageContext)
 
   const handleRemove = async (index: number) => {
     try {
-      const currArray = [...storedEntries]
+      const currArray = [...entries]
       currArray.splice(index, 1)
-      console.log('content screen remaining', currArray)
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(currArray))
-      setStoredEntries(currArray)
+      saveEntries(currArray)
     } catch (error) {
       console.log('error', error)
     }
@@ -41,7 +36,7 @@ function ContentScreen({route}: DetailsScreenProps) {
     <View>
       <Text>Content screen</Text>
       <ScrollView>
-        {storedEntries
+        {entries
           .slice(0)
           .reverse()
           .map((entry: Entry, index: number) => (
@@ -49,7 +44,7 @@ function ContentScreen({route}: DetailsScreenProps) {
               key={index}
               entry={entry}
               handleRemove={() =>
-                handleRemove(storedEntries.length - index - 1)
+                handleRemove(entries.length - index - 1)
               }></EntryRow>
           ))}
       </ScrollView>

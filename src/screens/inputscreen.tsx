@@ -29,12 +29,10 @@ type HomeScreenProps = {
 function InputScreen({navigation}: HomeScreenProps) {
   const [currentInput, setCurrentInput] = useState('')
   const [currentTagInput, setCurrentTagInput] = useState('')
-  // const [storedEntries, setStoredEntries] = useState<Entry[]>([])
-  const storedEntries = useContext(StorageContext)
+  const {entries, saveEntries} = useContext(StorageContext)
 
   const [tags, setTags] = useState<string[]>([])
 
-  // FIXME: More robust handling of multiple entries
   const handleSave = async () => {
     if (currentInput === '') {
       return
@@ -46,9 +44,8 @@ function InputScreen({navigation}: HomeScreenProps) {
         tags: tags,
       }
 
-      const updatedEntries = [...storedEntries, parsedInput]
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedEntries))
-      setStoredEntries(updatedEntries)
+      const updatedEntries = [...entries, parsedInput]
+      saveEntries(updatedEntries)
       setCurrentInput('')
       setTags([])
     } catch (error) {
@@ -64,26 +61,6 @@ function InputScreen({navigation}: HomeScreenProps) {
     setTags(updatedTags)
     setCurrentTagInput('')
   }
-
-  // const handleRemove = async (index: number) => {
-  //   try {
-  //     const currArray = [...storedEntries]
-  //     currArray.splice(index, 1)
-  //     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(currArray))
-  //     setStoredEntries(currArray)
-  //   } catch (error) {
-  //     console.log('error', error)
-  //   }
-  // }
-
-  const onLoad = async () => {
-    console.log('loading in input screen')
-    loadDataFromStorage(entries => setStoredEntries(entries))
-  }
-
-  useEffect(() => {
-    onLoad()
-  }, [])
 
   return (
     <View style={{height: '100%'}}>
