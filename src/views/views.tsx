@@ -1,10 +1,11 @@
-import {Text, TextInput, TouchableOpacity, View} from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import {ds, icons} from '../ux/design'
+import {Text, TextInput, View} from 'react-native'
 import {Entry} from '../data/entry'
 import {formatDate} from '../util/util'
+import {ds} from '../ux/design'
 import {IconButton} from './iconbutton'
+import {icons} from '../ux/icons'
 
+// FIXME: Refactor
 function InputRow(props: {
   placeholder: string
   icon: string
@@ -27,22 +28,29 @@ function InputRow(props: {
           }}></TextInput>
       </View>
 
-      <View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            paddingRight: ds.spacing.sideMargins,
-          }}>
-          <IconButton
-            onPress={props.handleSave}
-            icon={props.icon}
-            size={ds.icons.size}
-            color={ds.colors.primary}></IconButton>
+      {props.icon != '' ? (
+        <View>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              paddingRight: ds.spacing.sideMargins,
+            }}>
+            <IconButton
+              onPress={props.handleSave}
+              icon={props.icon}
+              size={ds.icons.size}
+              color={ds.colors.primary}></IconButton>
+          </View>
         </View>
-      </View>
+      ) : (
+        ''
+      )}
     </View>
   )
+}
+InputRow.defaultProps = {
+  icon: '',
 }
 
 function EntryRow(props: {entry: Entry; handleRemove: () => void}) {
@@ -103,4 +111,4 @@ function EntryRow(props: {entry: Entry; handleRemove: () => void}) {
   )
 }
 
-export {InputRow, EntryRow, IconButton}
+export {EntryRow, IconButton, InputRow}

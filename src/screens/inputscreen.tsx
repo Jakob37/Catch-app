@@ -1,23 +1,13 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import {RouteProp} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
 import {useContext, useEffect, useState} from 'react'
-import {
-  Button,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import {Button, Text, View} from 'react-native'
 import {RootStackParamList} from '../../App'
-import {formatDate} from '../util/util'
-import {ds, icons} from '../ux/design'
-import {EntryRow, InputRow} from '../views/views'
-import {Entry} from '../data/entry'
-import {STORAGE_KEY, loadDataFromStorage} from '../data/storage'
 import {StorageContext} from '../context/storage'
+import {ds} from '../ux/design'
+import {IconButton, InputRow} from '../views/views'
+import {icons} from '../ux/icons'
+import {TopBarIconButton} from '../views/iconbutton'
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>
 type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>
@@ -33,7 +23,26 @@ function InputScreen({navigation}: HomeScreenProps) {
 
   const [tags, setTags] = useState<string[]>([])
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View style={{flexDirection: 'row'}}>
+          <TopBarIconButton
+            icon={icons.bars}
+            onPress={() => {
+              navigation.navigate('Entries')
+            }}></TopBarIconButton>
+          <TopBarIconButton
+            icon={icons.floppy}
+            onPress={handleSave}></TopBarIconButton>
+        </View>
+      ),
+    })
+  }, [])
+
   const handleSave = async () => {
+    console.log('handling save')
+    console.log('current input', currentInput)
     if (currentInput === '') {
       return
     }
@@ -45,6 +54,7 @@ function InputScreen({navigation}: HomeScreenProps) {
       }
 
       const updatedEntries = [...entries, parsedInput]
+      console.log('Updated entries', updatedEntries)
       saveEntries(updatedEntries)
       setCurrentInput('')
       setTags([])
@@ -66,7 +76,6 @@ function InputScreen({navigation}: HomeScreenProps) {
     <View style={{height: '100%'}}>
       <InputRow
         placeholder="Enter your thoughts..."
-        icon={icons.save}
         textInputValue={currentInput}
         handleSave={handleSave}
         handleChangeText={(text: string) => setCurrentInput(text)}></InputRow>
