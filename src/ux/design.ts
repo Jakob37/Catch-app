@@ -8,6 +8,7 @@ export const ds = {
   },
   font: {
     sizes: {
+      topBar: 32,
       major: 16,
       minor: 10,
     },
@@ -22,10 +23,10 @@ export const ds = {
   textInput: {
     numberOfLines: 4,
   },
-};
+}
 
 export const icons = {
   trash: 'trash-o',
   save: 'save',
   tag: 'tag',
-};
+}

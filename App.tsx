@@ -1,4 +1,8 @@
-import {DefaultTheme, NavigationContainer} from '@react-navigation/native'
+import {
+  DefaultTheme,
+  NavigationContainer,
+  useNavigation,
+} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import React, {useEffect, useState} from 'react'
 import {enableScreens} from 'react-native-screens'
@@ -7,6 +11,9 @@ import InputScreen from './src/screens/inputscreen'
 import {STORAGE_KEY} from './src/data/storage'
 import {Entry} from './src/data/entry'
 import {StorageProvider} from './src/context/storage'
+import {Text} from 'react-native'
+import {IconButton} from './src/views/iconbutton'
+import {ds, icons} from './src/ux/design'
 enableScreens()
 
 export type RootStackParamList = {
@@ -33,12 +40,25 @@ function App(): JSX.Element {
           <Stack.Screen
             name="Home"
             component={InputScreen}
-            options={{headerShown: false}}
+            options={({navigation}) => ({
+              headerTitle: () => <Text style={{color: 'black'}}>test</Text>,
+              headerRight: () => (
+                <IconButton
+                  icon={icons.trash}
+                  color={ds.colors.secondary}
+                  size={ds.font.sizes.topBar}
+                  onPress={() => {
+                    navigation.navigate('Details')
+                  }}></IconButton>
+              ),
+            })}
           />
           <Stack.Screen
             name="Details"
             component={ContentScreen}
-            options={{title: 'Testing'}}
+            options={{
+              title: 'Testing',
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
