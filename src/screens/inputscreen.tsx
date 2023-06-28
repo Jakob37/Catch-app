@@ -2,11 +2,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect, useState} from 'react';
-import {ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackParamList} from '../../App';
 import {formatDate} from '../util/util';
 import {ds, icons} from '../ux/design';
+import {InputRow} from '../views/views';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
@@ -80,7 +87,12 @@ function InputScreen({navigation}: HomeScreenProps) {
 
   return (
     <View style={{height: '100%'}}>
-      <View style={{flexDirection: 'row', alignItems: 'stretch'}}>
+      <InputRow
+        icon={icons.save}
+        textInputValue={currentInput}
+        handleSave={handleSave}
+        handleChangeText={handleChangeText}></InputRow>
+      {/* <View style={{flexDirection: 'row', alignItems: 'stretch'}}>
         <View style={{flex: 1}}>
           <TextInput
             value={currentInput}
@@ -93,6 +105,7 @@ function InputScreen({navigation}: HomeScreenProps) {
               handleSave();
             }}></TextInput>
         </View>
+
         <View>
           <View
             style={{
@@ -107,8 +120,8 @@ function InputScreen({navigation}: HomeScreenProps) {
                 style={{color: ds.colors.primary}}></Icon>
             </TouchableOpacity>
           </View>
-        </View>
-      </View>
+        </View> */}
+      {/* </View> */}
       {/* <Button
         title="Go to content view"
         onPress={() => navigation.navigate('Details')}></Button> */}
