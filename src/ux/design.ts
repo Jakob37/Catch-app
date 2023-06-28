@@ -27,4 +27,5 @@ export const ds = {
 export const icons = {
   trash: 'trash-o',
   save: 'save',
+  tag: 'tag',
 };

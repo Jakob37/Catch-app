@@ -1,12 +1,13 @@
-import {TextInput, TouchableOpacity, View} from 'react-native';
-import {Icon} from 'react-native-vector-icons/Icon';
-import {ds} from '../ux/design';
+import {TextInput, TouchableOpacity, View} from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
+import {ds} from '../ux/design'
 
 function InputRow(props: {
-  icon: string;
-  textInputValue: string;
-  handleSave: () => void;
-  handleChangeText: () => void;
+  placeholder: string
+  icon: string
+  textInputValue: string
+  handleSave: () => void
+  handleChangeText: (newText: string) => void
 }): any {
   return (
     <View style={{flexDirection: 'row', alignItems: 'stretch'}}>
@@ -16,10 +17,10 @@ function InputRow(props: {
           onChangeText={props.handleChangeText}
           // numberOfLines={ds.textInput.numberOfLines}
           multiline={false}
-          placeholder="Enter your thoughts..."
+          placeholder={props.placeholder}
           blurOnSubmit={false}
           onSubmitEditing={_event => {
-            props.handleSave();
+            props.handleSave()
           }}></TextInput>
       </View>
 
@@ -39,7 +40,7 @@ function InputRow(props: {
         </View>
       </View>
     </View>
-  );
+  )
 }
 
-export {InputRow};
+export {InputRow}
