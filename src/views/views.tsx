@@ -3,6 +3,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import {ds, icons} from '../ux/design'
 import {Entry} from '../data/entry'
 import {formatDate} from '../util/util'
+import {IconButton} from './iconbutton'
 
 function InputRow(props: {
   placeholder: string
@@ -38,31 +39,9 @@ function InputRow(props: {
             icon={props.icon}
             size={ds.icons.size}
             color={ds.colors.primary}></IconButton>
-          {/* <TouchableOpacity onPress={props.handleSave}>
-            <Icon
-              name={props.icon}
-              size={ds.icons.size}
-              style={{color: ds.colors.primary}}></Icon>
-          </TouchableOpacity> */}
         </View>
       </View>
     </View>
-  )
-}
-
-function IconButton(props: {
-  onPress: () => void
-  icon: string
-  size: number
-  color: string
-}) {
-  return (
-    <TouchableOpacity onPress={props.onPress}>
-      <Icon
-        name={props.icon}
-        size={props.size}
-        style={{color: props.color}}></Icon>
-    </TouchableOpacity>
   )
 }
 
@@ -114,17 +93,11 @@ function EntryRow(props: {entry: Entry; handleRemove: () => void}) {
           justifyContent: 'center',
           paddingRight: ds.spacing.sideMargins,
         }}>
-        <TouchableOpacity
-          onPress={() =>
-            // Temporary fix to get the right entry
-            // Should be using index-based system
-            props.handleRemove()
-          }>
-          <Icon
-            name={icons.trash}
-            size={ds.icons.size}
-            style={{color: ds.colors.primary}}></Icon>
-        </TouchableOpacity>
+        <IconButton
+          onPress={() => props.handleRemove()}
+          icon={icons.trash}
+          size={ds.icons.size}
+          color={ds.colors.primary}></IconButton>
       </View>
     </View>
   )

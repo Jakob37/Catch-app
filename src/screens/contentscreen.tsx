@@ -1,13 +1,11 @@
 import {RouteProp} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
+import {useContext} from 'react'
 import {ScrollView, Text, View} from 'react-native'
 import {RootStackParamList} from '../../App'
-import {EntryRow} from '../views/views'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import {STORAGE_KEY, loadDataFromStorage} from '../data/storage'
-import {Entry} from '../data/entry'
-import {useContext, useEffect, useState} from 'react'
 import {StorageContext} from '../context/storage'
+import {Entry} from '../data/entry'
+import {EntryRow} from '../views/views'
 
 type DetailsScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -34,19 +32,22 @@ function ContentScreen({route}: DetailsScreenProps) {
 
   return (
     <View>
-      <Text>Content screen</Text>
       <ScrollView>
-        {entries
-          .slice(0)
-          .reverse()
-          .map((entry: Entry, index: number) => (
-            <EntryRow
-              key={index}
-              entry={entry}
-              handleRemove={() =>
-                handleRemove(entries.length - index - 1)
-              }></EntryRow>
-          ))}
+        {entries.length > 0 ? (
+          entries
+            .slice(0)
+            .reverse()
+            .map((entry: Entry, index: number) => (
+              <EntryRow
+                key={index}
+                entry={entry}
+                handleRemove={() =>
+                  handleRemove(entries.length - index - 1)
+                }></EntryRow>
+            ))
+        ) : (
+          <Text>No entries to show</Text>
+        )}
       </ScrollView>
     </View>
   )

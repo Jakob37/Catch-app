@@ -35,7 +35,11 @@ function App(): JSX.Element {
             component={InputScreen}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="Details" component={ContentScreen} />
+          <Stack.Screen
+            name="Details"
+            component={ContentScreen}
+            options={{title: 'Testing'}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </StorageProvider>
