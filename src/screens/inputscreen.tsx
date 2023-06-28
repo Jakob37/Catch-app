@@ -2,13 +2,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import {RouteProp} from '@react-navigation/native'
 import {StackNavigationProp} from '@react-navigation/stack'
 import {useEffect, useState} from 'react'
-import {ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native'
+import {
+  Button,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {RootStackParamList} from '../../App'
 import {formatDate} from '../util/util'
 import {ds, icons} from '../ux/design'
 import {EntryRow, InputRow} from '../views/views'
 import {Entry} from '../data/entry'
+import {STORAGE_KEY} from '../data/storage'
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>
 type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>
@@ -16,8 +24,6 @@ type HomeScreenProps = {
   navigation: HomeScreenNavigationProp
   route: HomeScreenRouteProp
 }
-
-const STORAGE_KEY = '@catch:entries'
 
 function InputScreen({navigation}: HomeScreenProps) {
   const [currentInput, setCurrentInput] = useState('')
@@ -93,7 +99,9 @@ function InputScreen({navigation}: HomeScreenProps) {
         textInputValue={currentInput}
         handleSave={handleSave}
         handleChangeText={(text: string) => setCurrentInput(text)}></InputRow>
-      <Text>{tags.map((tag: string) => `#${tag}`).join(' ')}</Text>
+      <Text style={{color: ds.colors.secondary, fontSize: ds.font.sizes.minor}}>
+        {tags.map((tag: string) => `#${tag}`).join(' ')}
+      </Text>
 
       <InputRow
         placeholder="Enter your tags..."
@@ -104,16 +112,16 @@ function InputScreen({navigation}: HomeScreenProps) {
           setCurrentTagInput(text)
         }></InputRow>
 
-      {/* <Button
+      <Button
         title="Go to content view"
-        onPress={() => navigation.navigate('Details')}></Button> */}
+        onPress={() => navigation.navigate('Details')}></Button>
       <ScrollView>
         {storedEntries
           .slice(0)
           .reverse()
           .map((entry: Entry, index: number) => (
             <EntryRow
-              key={String(index)}
+              index={index}
               entry={entry}
               handleRemove={() =>
                 handleRemove(storedEntries.length - index - 1)
