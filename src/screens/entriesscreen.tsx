@@ -1,24 +1,14 @@
-import {RouteProp} from '@react-navigation/native'
-import {StackNavigationProp} from '@react-navigation/stack'
-import {useContext} from 'react'
-import {ScrollView, Text, View} from 'react-native'
-import {RootStackParamList} from '../../App'
-import {StorageContext} from '../context/storage'
-import {Entry} from '../data/entry'
-import {EntryRow} from '../views/views'
+import { RouteProp } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { useContext } from 'react'
+import { ScrollView, Text, View } from 'react-native'
+import { RootStackParamList } from '../../App'
+import { StorageContext } from '../context/storage'
+import { Entry } from '../data/entry'
+import { EntryRow } from '../views/views'
 
-type EntriesScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Entries'
->
-type EntriesScreenRouteProp = RouteProp<RootStackParamList, 'Entries'>
-type EntriesScreenProps = {
-  navigation: EntriesScreenNavigationProp
-  route: EntriesScreenRouteProp
-}
-
-function EntriesScreen({route}: EntriesScreenProps) {
-  const {entries, saveEntries} = useContext(StorageContext)
+function EntriesScreen() {
+  const { entries, saveEntries } = useContext(StorageContext)
 
   const handleRemove = async (index: number) => {
     try {

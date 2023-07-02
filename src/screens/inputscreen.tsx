@@ -16,29 +16,29 @@ type HomeScreenProps = {
   route: HomeScreenRouteProp
 }
 
-function InputScreen({ navigation }: HomeScreenProps) {
+function InputScreen() {
   const [currentInput, setCurrentInput] = useState('')
   const [currentTagInput, setCurrentTagInput] = useState('')
   const { entries, saveEntries } = useContext(StorageContext)
 
   const [tags, setTags] = useState<string[]>([])
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <View style={{ flexDirection: 'row' }}>
-          <TopBarIconButton
-            icon={icons.bars}
-            onPress={() => {
-              navigation.navigate('Entries')
-            }}></TopBarIconButton>
-          <TopBarIconButton
-            icon={icons.floppy}
-            onPress={handleSave}></TopBarIconButton>
-        </View>
-      ),
-    })
-  }, [currentInput, currentTagInput])
+  // useEffect(() => {
+  //   navigation.setOptions({
+  //     headerRight: () => (
+  //       <View style={{ flexDirection: 'row' }}>
+  //         {/* <TopBarIconButton
+  //           icon={icons.bars}
+  //           onPress={() => {
+  //             navigation.navigate('Entries')
+  //           }}></TopBarIconButton> */}
+  //         <TopBarIconButton
+  //           icon={icons.floppy}
+  //           onPress={handleSave}></TopBarIconButton>
+  //       </View>
+  //     ),
+  //   })
+  // }, [currentInput, currentTagInput])
 
   const handleSave = async () => {
     console.log('handling save')
