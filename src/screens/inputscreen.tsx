@@ -1,13 +1,13 @@
-import {RouteProp} from '@react-navigation/native'
-import {StackNavigationProp} from '@react-navigation/stack'
-import {useContext, useEffect, useState} from 'react'
-import {Button, Text, View} from 'react-native'
-import {RootStackParamList} from '../../App'
-import {StorageContext} from '../context/storage'
-import {ds} from '../ux/design'
-import {IconButton, InputRow} from '../views/views'
-import {icons} from '../ux/icons'
-import {TopBarIconButton} from '../views/iconbutton'
+import { RouteProp } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { useContext, useEffect, useState } from 'react'
+import { Text, View } from 'react-native'
+import { RootStackParamList } from '../../App'
+import { StorageContext } from '../context/storage'
+import { ds } from '../ux/design'
+import { icons } from '../ux/icons'
+import { TopBarIconButton } from '../views/iconbutton'
+import { InputRow } from '../views/views'
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>
 type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>
@@ -16,17 +16,17 @@ type HomeScreenProps = {
   route: HomeScreenRouteProp
 }
 
-function InputScreen({navigation}: HomeScreenProps) {
+function InputScreen({ navigation }: HomeScreenProps) {
   const [currentInput, setCurrentInput] = useState('')
   const [currentTagInput, setCurrentTagInput] = useState('')
-  const {entries, saveEntries} = useContext(StorageContext)
+  const { entries, saveEntries } = useContext(StorageContext)
 
   const [tags, setTags] = useState<string[]>([])
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <TopBarIconButton
             icon={icons.bars}
             onPress={() => {
@@ -73,13 +73,14 @@ function InputScreen({navigation}: HomeScreenProps) {
   }
 
   return (
-    <View style={{height: '100%'}}>
+    <View style={{ height: '100%' }}>
       <InputRow
         placeholder="Enter your thoughts..."
         textInputValue={currentInput}
         handleSave={handleSave}
         handleChangeText={(text: string) => setCurrentInput(text)}></InputRow>
-      <Text style={{color: ds.colors.secondary, fontSize: ds.font.sizes.minor}}>
+      <Text
+        style={{ color: ds.colors.secondary, fontSize: ds.font.sizes.minor }}>
         {tags.map((tag: string) => `#${tag}`).join(' ')}
       </Text>
 
